@@ -1,0 +1,37 @@
+Pin layout:
+
+Raspberry Pi 4
+===============
+Pin#      GPIO#    destination
+37        26       TB6612FNG VCC  - power the TB6612FNG chip                               - Red
+29         5       TB6612FNG STBY - dis/connect power between the TB6612FNG to the motors  - Brown
+39                 TB6612FNG GND  - ground between Raspberry Pi 4 and TB6612FNG            - Black
+
+31         6       TB6612FNG PWMA - TB6612FNG 1 - motor 1 Speed control                    - Purple
+33        13       TB6612FNG AIN1 - TB6612FNG 1 - motor 1 CW                               - White
+35        19       TB6612FNG AIN2 - TB6612FNG 1 - motor 1 CCW                              - Gray
+36        16       TB6612FNG PWMB - TB6612FNG 1 - motor 2 Speed control                    - Purple
+38        20       TB6612FNG BIN1 - TB6612FNG 1 - motor 2 CW                               - White
+40        21       TB6612FNG BIN2 - TB6612FNG 1 - motor 2 CCW                              - Gray
+
+12        18       TB6612FNG VCC  - power the TB6612FNG chip                               - Red
+32        12       TB6612FNG STBY - dis/connect power between the TB6612FNG to the motors  - Brown
+14                 TB6612FNG GND  - ground between Raspberry Pi 4 and TB6612FNG            - Black
+
+16        23       TB6612FNG PWMA - TB6612FNG 2 - motor 1 Speed control                    - Purple
+18        24       TB6612FNG AIN1 - TB6612FNG 2 - motor 1 CW                               - White
+22        25       TB6612FNG AIN2 - TB6612FNG 2 - motor 1 CCW                              - Gray
+11        17       TB6612FNG PWMB - TB6612FNG 2 - motor 2 Speed control                    - Purple
+13        27       TB6612FNG BIN1 - TB6612FNG 2 - motor 2 CW                               - White
+15        22       TB6612FNG BIN2 - TB6612FNG 2 - motor 2 CCW                              - Gray
+
+
+
+TB6612FNG
+==========
+VM           Red line from the 12V battery     - Red
+GND          Black line from the 12V battery   - Black
+A01          Aout1 - going to motor 1          - Blue
+A02          Aout2 - going to motor 1          - Green
+B01          Bout1 - going to motor 2          - Green
+B02          Bout2 - going to motor 2          - Blue

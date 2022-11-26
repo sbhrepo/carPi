@@ -1,0 +1,6 @@
+- Install Raspberry Pi OS.
+- Update and upgrade Raspberry Pi (sudo apt update && sudo apt upgrade --yes).
+- Reboot the Raspberry Pi (sudo reboot).
+- If Python not installed, Install it.
+- If pip not installed, Install it. (sudo apt install python-pip)
+- Install Flask (sudo apt install python3-flask) or (sudo pip3 install Flask)
