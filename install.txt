@@ -3,4 +3,4 @@
 - Reboot the Raspberry Pi (sudo reboot).
 - If Python not installed, Install it.
 - If pip not installed, Install it. (sudo apt install python-pip)
-- Make sure Flask is install (run pip tree) ( if not sudo apt install python3-flask) or (sudo pip3 install Flask)
+- Make sure Flask is install (run pip list) ( if not sudo apt install python3-flask) or (sudo pip3 install Flask)
