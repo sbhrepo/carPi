@@ -1,4 +1,4 @@
-from motor_control import  drive
+from motor_control import  drive, control
 from flask import Flask
 app = Flask(__name__)
 
@@ -11,7 +11,11 @@ def hello_world():
 def driveCommand(direction, speed):
     return drive(direction, speed)
 
+@app.route('/control/<command>', methods=['GET'])
+def controlCommand(command):
+    return control(command)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8090)
     drive("stop", 0)
-    drive("end", 0)
+    control("poweroff", 0)

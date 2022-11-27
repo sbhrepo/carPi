@@ -135,25 +135,28 @@ def blStopMotor():
     bl_pwm_pin_mot4.value = 0
 
 
-
-def drive(direction, speed):
-    if direction.lower() == "start":
+def control(command):
+    if command.lower() == "poweron":
        controler1.on()
        controler2.on()
-       return f"Power UP drive controler"
-    elif direction.lower() == "end":
+       return f"Power ON controler"
+    elif command.lower() == "poweroff":
        controler1.off()
        controler2.off()
-       return f"Power DOWN drive controler"
-    elif direction.lower() == "standbyon":
+       return f"Power OFF controler"
+    elif command.lower() == "standbyon":
        standby1.on()
        standby2.on()
-       return f"Standby on"
-    elif direction.lower() == "standbyoff":
+       return f"Standby on, Enable motors signal"
+    elif command.lower() == "standbyoff":
        standby1.off()
        standby2.off()
-       return f"Standby off"
-    elif direction.lower() == "stop":
+       return f"Standby off, Disable motors signal"
+    else:
+       return "Not a valid command"
+
+def drive(direction, speed):
+    if direction.lower() == "stop":
        frStopMotor()
        flStopMotor()
        brStopMotor()
