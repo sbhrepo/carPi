@@ -1,7 +1,7 @@
 from gpiozero import PWMOutputDevice, DigitalOutputDevice
 
 class Motor():
-    def __init__(self, PWM_PIN, IN1_PIN, IN2_PIN):
+    def __init__(self, PWM_PIN, IN2_PIN, IN1_PIN):
         self.PWM_PIN = PWM_PIN
         self.IN1_PIN = IN1_PIN
         self.IN2_PIN = IN2_PIN

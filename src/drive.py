@@ -6,7 +6,7 @@ class Drive():
         self.controlF = control.Control(26, 5)
         self.controlB = control.Control(18, 12)
         self.motorFR = motor.Motor(6, 13, 19)
-        self.motorFL = motor.Motor(16, 20, 21)
+        self.motorFL = motor.Motor(21, 20, 16)
         self.motorBR = motor.Motor(23, 24, 25)
         self.motorBL = motor.Motor(17, 27, 22)
 
