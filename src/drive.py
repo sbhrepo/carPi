@@ -14,13 +14,15 @@ class Drive():
         self.controlF.powerOn()
         self.controlB.powerOn()
         msg = self.standbyOn()
-        return f"Power ON controlers\n{msg}"
+        #return f"Power ON controlers\n{msg}"
+        return f"Power ON controlers"
 
     def powerOff(self):
         msg = self.standbyOff()
         self.controlF.powerOff()
         self.controlB.powerOff()
-        return f"{msg}\nPower OFF controlers"
+        #return f"{msg}\nPower OFF controlers" # unless we want to add msg in all functions from all calls including for exaple poweroff x2
+        return f"Power OFF controlers"
 
     def standbyOn(self):
         self.controlF.standbyOn()
