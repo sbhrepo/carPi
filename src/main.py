@@ -5,6 +5,8 @@ app = Flask(__name__)
 
 @app.route('/control/shutdown', methods=['GET'])
 def shutdown():
+    drive.stop()
+    drive.powerOff()
     call("sudo shutdown --n", shell=True)
     return f"Raspberry Pi Shutdown"
 
