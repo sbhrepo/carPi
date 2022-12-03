@@ -40,71 +40,71 @@ class Drive():
         return f"STOPPED"
 
     def front(self, speed, time):
-        self.motorFR.rotateMotorCCW(speed)
-        self.motorFL.rotateMotorCW(speed)
-        self.motorBR.rotateMotorCCW(speed)
-        self.motorBL.rotateMotorCW(speed)
+        self.motorFR.rotateMotorCW(speed)
+        self.motorFL.rotateMotorCCW(speed)
+        self.motorBR.rotateMotorCW(speed)
+        self.motorBL.rotateMotorCCW(speed)
         return f"DRIVING FRONT at speed %{speed}"
 
     def back(self, speed, time):
-        self.motorFR.rotateMotorCW(speed)
-        self.motorFL.rotateMotorCCW(speed)
-        self.motorBR.rotateMotorCW(speed)
-        self.motorBL.rotateMotorCCW(speed)
+        self.motorFR.rotateMotorCCW(speed)
+        self.motorFL.rotateMotorCW(speed)
+        self.motorBR.rotateMotorCCW(speed)
+        self.motorBL.rotateMotorCW(speed)
         return f"DRIVING BACK at speed %{speed}"
 
     def right(self, speed, time):
-        self.motorFR.rotateMotorCW(speed)
-        self.motorFL.rotateMotorCW(speed)
-        self.motorBR.rotateMotorCCW(speed)
-        self.motorBL.rotateMotorCCW(speed)
-        return f"DRIVING RIGHT at speed %{speed}"
-
-    def left(self, speed, time):
         self.motorFR.rotateMotorCCW(speed)
         self.motorFL.rotateMotorCCW(speed)
         self.motorBR.rotateMotorCW(speed)
         self.motorBL.rotateMotorCW(speed)
+        return f"DRIVING RIGHT at speed %{speed}"
+
+    def left(self, speed, time):
+        self.motorFR.rotateMotorCW(speed)
+        self.motorFL.rotateMotorCW(speed)
+        self.motorBR.rotateMotorCCW(speed)
+        self.motorBL.rotateMotorCCW(speed)
         return f"DRIVING LEFT at speed %{speed}"
 
     def frontRight(self, speed, time):
         self.motorFR.stopMotor()
-        self.motorFL.rotateMotorCW(speed)
-        self.motorBR.rotateMotorCCW(speed)
+        self.motorFL.rotateMotorCCW(speed)
+        self.motorBR.rotateMotorCW(speed)
         self.motorBL.stopMotor()
         return f"DRIVING FRONT-RIGHT at speed %{speed}"
 
     def frontLeft(self, speed, time):
-        self.motorFR.rotateMotorCCW(speed)
-        self.motorFL.stopMotor()
-        self.motorBR.stopMotor()
-        self.motorBL.rotateMotorCW(speed)
-        return f"DRIVING FRONT-LEFT at speed %{speed}"
-
-    def backRight(self, speed, time):
         self.motorFR.rotateMotorCW(speed)
         self.motorFL.stopMotor()
         self.motorBR.stopMotor()
         self.motorBL.rotateMotorCCW(speed)
+        return f"DRIVING FRONT-LEFT at speed %{speed}"
+
+    def backRight(self, speed, time):
+        self.motorFR.rotateMotorCCW(speed)
+        self.motorFL.stopMotor()
+        self.motorBR.stopMotor()
+        self.motorBL.rotateMotorCW(speed)
         return f"DRIVING BACK-RIGHT at speed %{speed}"
 
     def backLeft(self, speed, time):
         self.motorFR.stopMotor()
-        self.motorFL.rotateMotorCCW(speed)
-        self.motorBR.rotateMotorCW(speed)
+        self.motorFL.rotateMotorCW(speed)
+        self.motorBR.rotateMotorCCW(speed)
         self.motorBL.stopMotor()
         return f"DRIVING BACK-LEFT at speed %{speed}"
 
     def turnRight(self, speed, time):
-        self.motorFR.rotateMotorCW(speed)
-        self.motorFL.rotateMotorCW(speed)
-        self.motorBR.rotateMotorCW(speed)
-        self.motorBL.rotateMotorCW(speed)
-        return f"TURNING RIGHT at speed %{speed}"
-
-    def turnLeft(self, speed, time):
         self.motorFR.rotateMotorCCW(speed)
         self.motorFL.rotateMotorCCW(speed)
         self.motorBR.rotateMotorCCW(speed)
         self.motorBL.rotateMotorCCW(speed)
+        return f"TURNING RIGHT at speed %{speed}"
+
+    def turnLeft(self, speed, time):
+        self.motorFR.rotateMotorCW(speed)
+        self.motorFL.rotateMotorCW(speed)
+        self.motorBR.rotateMotorCW(speed)
+        self.motorBL.rotateMotorCW(speed)
         return f"TURNING LEFT at speed %{speed}"

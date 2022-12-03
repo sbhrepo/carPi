@@ -1,7 +1,12 @@
 import drive
 from flask import Flask
+from subprocess import call
 app = Flask(__name__)
 
+@app.route('/control/shutdown', methods=['GET'])
+def shutdown():
+    call("sudo shutdown --n", shell=True)
+    return f"Raspberry Pi Shutdown"
 
 @app.route('/control/poweron', methods=['GET'])
 def poweron():
