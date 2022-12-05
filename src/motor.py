@@ -26,3 +26,9 @@ class Motor():
         self.pwm_pin_mot.value = 0
         self.cw_pin_mot.value = 0
         self.ccw_pin_mot.value = 0
+
+    def status(self):
+        statusReport = f"  PWM_PIN ({self.PWM_PIN}) value is {self.pwm_pin_mot.value}\n"
+        statusReport += f"  IN1_PIN ({self.IN1_PIN}) value is {self.cw_pin_mot.value}\n"
+        statusReport += f"  IN2_PIN ({self.IN2_PIN}) value is {self.ccw_pin_mot.value}\n"
+        return statusReport

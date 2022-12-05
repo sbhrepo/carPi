@@ -2,6 +2,8 @@ from gpiozero import LED
 
 class Control():
     def __init__(self, CONTROLER, STANDBY):
+        self.CONTROLER_PIN = CONTROLER
+        self.STANDBY_PIN = STANDBY
         self.CONTROLER = LED(CONTROLER)
         self.STANDBY = LED(STANDBY)
 
@@ -16,3 +18,8 @@ class Control():
 
     def standbyOff(self):
         self.STANDBY.off()
+
+    def status(self):
+        statusReport = f"  CONTROLER power ({self.CONTROLER_PIN}) value is {self.CONTROLER.value}\n"
+        statusReport += f"  STANDBY ({self.STANDBY_PIN}) value is {self.STANDBY.value}\n"
+        return statusReport

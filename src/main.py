@@ -6,18 +6,9 @@ from subprocess import call
 
 app = Flask(__name__)
 
-@app.route('/navigate/stop', methods=['GET'])
-def NavigateStop():    
-    return nav.stoptRoute()
-
-
-@app.route('/navigate/start/<name>', methods=['GET'])
-def navigateTo(name):
-    speed = int(request.args.get("speed"))
-    timeToRun = int(request.args.get("time"))
-    print ("name=",name," speed=",speed," time=",timeToRun)
-    return nav.startRoute(name, speed, timeToRun)
-
+@app.route('/status', methods=['GET'])
+def status():
+    return drive.status()
 
 @app.route('/control/shutdown', methods=['GET'])
 def shutdown():
@@ -77,6 +68,18 @@ def turnRight(speed):
 @app.route('/drive/turnLeft/<speed>', methods=['GET'])
 def turnLeft(speed):
     return drive.turnLeft(speed, 0)
+
+@app.route('/navigate/stop', methods=['GET'])
+def NavigateStop():    
+    return nav.stoptRoute()
+
+@app.route('/navigate/start/<name>', methods=['GET'])
+def navigateTo(name):
+    speed = int(request.args.get("speed"))
+    timeToRun = int(request.args.get("time"))
+    print("name=",name," speed=",speed," time=",timeToRun)
+    return nav.startRoute(name, speed, timeToRun)
+
 
 if __name__ == '__main__':
     drive = drive.Drive()

@@ -110,3 +110,19 @@ class Drive():
         self.motorBR.rotateMotorCW(speed)
         self.motorBL.rotateMotorCW(speed)
         return f"TURNING LEFT at speed %{speed}"
+
+    def status(self):
+        statusReport = f"control front:\n"
+        statusReport += self.controlF.status()
+        statusReport += f"Motor front-right:\n"
+        statusReport += self.motorFL.status()
+        statusReport += f"Motor front-left:\n"
+        statusReport += self.motorFL.status()
+
+        statusReport += f"control back:\n"
+        statusReport += self.controlB.status()
+        statusReport += f"Motor back-right:\n"
+        statusReport += self.motorBR.status()
+        statusReport += f"Motor back-left:\n"
+        statusReport += self.motorBL.status()
+        return statusReport
