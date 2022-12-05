@@ -1,7 +1,7 @@
 import control
 import motor
 
-class Drive():
+class Drive:
     def __init__(self):
         self.controlF = control.Control(26, 5)
         self.controlB = control.Control(18, 12)

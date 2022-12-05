@@ -1,6 +1,6 @@
 from gpiozero import LED
 
-class Control():
+class Control:
     def __init__(self, CONTROLER, STANDBY):
         self.CONTROLER_PIN = CONTROLER
         self.STANDBY_PIN = STANDBY
