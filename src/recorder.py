@@ -21,7 +21,7 @@ class Recorder:
 
     def getRecords(self):
         dir_list = os.listdir("../records")
-        return dir_list
+        return ' '.join(dir_list)
 
     def deleteRecord(self, name):
         os.remove("../records/"+name)

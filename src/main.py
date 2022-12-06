@@ -1,4 +1,6 @@
+import os
 import drive
+import recorder
 import navigate
 from flask import Flask
 from flask import request
@@ -77,6 +79,10 @@ def startRecording(name):
 def stopRecording():
     return drive.stopRecording()
 
+@app.route('/recordings', methods=['GET'])
+def recordings():
+    return recordings.getRecords()
+
 @app.route('/navigate/stop', methods=['GET'])
 def NavigateStop():    
     return drive.stoptRoute()
@@ -91,6 +97,7 @@ def navigateTo(name):
 
 if __name__ == '__main__':
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
+    recordings = recorder.Recorder()
     drive = drive.Drive()
     nav = navigate.Navigate(drive)
     app.run(host='0.0.0.0', port=8090)
