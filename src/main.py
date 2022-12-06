@@ -90,6 +90,7 @@ def navigateTo(name):
 
 
 if __name__ == '__main__':
+    os.chdir(os.path.abspath(os.path.dirname(__file__)))
     drive = drive.Drive()
     nav = navigate.Navigate(drive)
     app.run(host='0.0.0.0', port=8090)
