@@ -1,5 +1,7 @@
 import control
 import motor
+import stopwatch
+import recorder
 
 class Drive:
     def __init__(self):
@@ -9,6 +11,36 @@ class Drive:
         self.motorFL = motor.Motor(21, 20, 16)
         self.motorBR = motor.Motor(23, 24, 25)
         self.motorBL = motor.Motor(17, 27, 22)
+        self.timer = stopwatch.StopWatch()
+        self.recording = False
+
+    def startRecording(self, recordName):
+        if self.recording == True:
+            return f"Recording in progress, can't start new recording before finishing the previous recording."
+        self.action = None
+        self.speed = None
+        self.recordName = recordName
+        self.recording = True
+        self.recorder = recorder.Recorder()
+        return f"OK"
+
+    def stopRecording(self):
+        if self.recording == False:
+            return f"there are no recording in progress."
+        self.recorder.add({"action":self.action, "time":round(self.timer.stop()), "speed":self.speed})
+        self.recording = False
+        self.recorder.save(self.recordName)
+        self.recorder = None
+        return "Done."
+
+    def recordAction(self, action, speed):
+        if self.recording == False:
+            return
+        if self.action != None and self.speed != None:
+            self.recorder.add({"action":self.action, "time":round(self.timer.stop()), "speed":self.speed})
+        self.action = action
+        self.speed = speed
+        self.timer.start()
 
     def powerOn(self):
         self.controlF.powerOn()
@@ -39,6 +71,7 @@ class Drive:
         self.motorFL.stopMotor()
         self.motorBR.stopMotor()
         self.motorBL.stopMotor()
+        self.recordAction("stop", 0)
         return f"STOPPED"
 
     def front(self, speed, time):
@@ -46,6 +79,7 @@ class Drive:
         self.motorFL.rotateMotorCCW(speed)
         self.motorBR.rotateMotorCW(speed)
         self.motorBL.rotateMotorCCW(speed)
+        self.recordAction("front", speed)
         return f"DRIVING FRONT at speed %{speed}"
 
     def back(self, speed, time):
@@ -53,6 +87,7 @@ class Drive:
         self.motorFL.rotateMotorCW(speed)
         self.motorBR.rotateMotorCCW(speed)
         self.motorBL.rotateMotorCW(speed)
+        self.recordAction("back", speed)
         return f"DRIVING BACK at speed %{speed}"
 
     def right(self, speed, time):
@@ -60,6 +95,7 @@ class Drive:
         self.motorFL.rotateMotorCCW(speed)
         self.motorBR.rotateMotorCW(speed)
         self.motorBL.rotateMotorCW(speed)
+        self.recordAction("right", speed)
         return f"DRIVING RIGHT at speed %{speed}"
 
     def left(self, speed, time):
@@ -67,6 +103,7 @@ class Drive:
         self.motorFL.rotateMotorCW(speed)
         self.motorBR.rotateMotorCCW(speed)
         self.motorBL.rotateMotorCCW(speed)
+        self.recordAction("left", speed)
         return f"DRIVING LEFT at speed %{speed}"
 
     def frontRight(self, speed, time):
@@ -74,6 +111,7 @@ class Drive:
         self.motorFL.rotateMotorCCW(speed)
         self.motorBR.rotateMotorCW(speed)
         self.motorBL.stopMotor()
+        self.recordAction("frontRight", speed)
         return f"DRIVING FRONT-RIGHT at speed %{speed}"
 
     def frontLeft(self, speed, time):
@@ -81,6 +119,7 @@ class Drive:
         self.motorFL.stopMotor()
         self.motorBR.stopMotor()
         self.motorBL.rotateMotorCCW(speed)
+        self.recordAction("frontLeft", speed)
         return f"DRIVING FRONT-LEFT at speed %{speed}"
 
     def backRight(self, speed, time):
@@ -88,6 +127,7 @@ class Drive:
         self.motorFL.stopMotor()
         self.motorBR.stopMotor()
         self.motorBL.rotateMotorCW(speed)
+        self.recordAction("backRight", speed)
         return f"DRIVING BACK-RIGHT at speed %{speed}"
 
     def backLeft(self, speed, time):
@@ -95,6 +135,7 @@ class Drive:
         self.motorFL.rotateMotorCW(speed)
         self.motorBR.rotateMotorCCW(speed)
         self.motorBL.stopMotor()
+        self.recordAction("backLeft", speed)
         return f"DRIVING BACK-LEFT at speed %{speed}"
 
     def turnRight(self, speed, time):
@@ -102,6 +143,7 @@ class Drive:
         self.motorFL.rotateMotorCCW(speed)
         self.motorBR.rotateMotorCCW(speed)
         self.motorBL.rotateMotorCCW(speed)
+        self.recordAction("turnRight", speed)
         return f"TURNING RIGHT at speed %{speed}"
 
     def turnLeft(self, speed, time):
@@ -109,6 +151,7 @@ class Drive:
         self.motorFL.rotateMotorCW(speed)
         self.motorBR.rotateMotorCW(speed)
         self.motorBL.rotateMotorCW(speed)
+        self.recordAction("turnLeft", speed)
         return f"TURNING LEFT at speed %{speed}"
 
     def status(self):

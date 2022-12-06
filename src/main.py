@@ -69,6 +69,14 @@ def turnRight(speed):
 def turnLeft(speed):
     return drive.turnLeft(speed, 0)
 
+@app.route('/recording/start/<name>', methods=['GET'])
+def startRecording(name):
+    return drive.startRecording(name)
+
+@app.route('/recording/stop', methods=['GET'])
+def stopRecording():
+    return drive.stopRecording()
+
 @app.route('/navigate/stop', methods=['GET'])
 def NavigateStop():    
     return drive.stoptRoute()

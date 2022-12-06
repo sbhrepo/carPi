@@ -1,6 +1,6 @@
 import time
 
-class Navigate():
+class Navigate:
     def __init__(self, drive):
         super().__init__()
         self.drive = drive
