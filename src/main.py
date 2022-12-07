@@ -33,7 +33,7 @@ def poweroff():
 
 @app.route('/drive/stop', methods=['GET'])
 def stop():
-    return drive.stop()
+    return drive.stop(0, 0)
 
 @app.route('/drive/front/<speed>', methods=['GET'])
 def front(speed):
@@ -76,6 +76,10 @@ def turnLeft(speed):
     return drive.turnLeft(speed, 0)
 
 # recording section
+
+@app.route('/recording/play/<name>', methods=['GET'])
+def playRecording(name):
+    return drive.playRecording(name)
 
 @app.route('/recording/start/<name>', methods=['GET'])
 def startRecording(name):

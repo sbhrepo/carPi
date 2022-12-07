@@ -22,6 +22,12 @@ class Recorder:
     def cancel(self):                
         self.records.clear()
 
+    def load(self, name):
+        with open("../records/"+name) as file:
+            data = json.load(file)
+        file.close()
+        return data
+
     def getRecords(self):
         dir_list = os.listdir("../records")
         return ' '.join(dir_list)

@@ -24,3 +24,7 @@ class StopWatch:
 
     def elapsed(self):
         return time.time() - self.startTime
+
+    def cancel(self):                
+        self.startTime = None
+        self.stopTime = None

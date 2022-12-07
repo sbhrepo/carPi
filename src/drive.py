@@ -12,38 +12,51 @@ class Drive:
         self.motorBR = motor.Motor(23, 24, 25)
         self.motorBL = motor.Motor(17, 27, 22)
         self.timer = stopwatch.StopWatch()
-        self.recording = False
+        self.recorder = recorder.Recorder()
+        self.recording = "idle"
 
     def startRecording(self, recordName):
-        if self.recording == True:
-            return f"Recording in progress, can't start new recording before finishing the previous recording."
+        if self.recording != "idle":
+            return f"Can't start new recording during recording\play recording."
+        self.recording = "recording"
         self.action = None
         self.speed = None
         self.recordName = recordName
-        self.recording = True
-        self.recorder = recorder.Recorder()
         return f"OK"
 
     def stopRecording(self):
-        if self.recording == False:
-            return f"there are no recording in progress."
-        self.recorder.add({"action":self.action, "time":round(self.timer.stop()), "speed":self.speed})
-        self.recording = False
-        self.recorder.save(self.recordName)
-        self.recorder = None
+        if self.recording != "recording":
+            return f"There are no recording in progress."
+        if self.action != None and self.speed != None:
+            self.recorder.add({"action":self.action, "time":round(self.timer.stop()), "speed":self.speed})
+            self.recorder.save(self.recordName)
+        self.recording = "idle"
         return "Done."
 
     def cancelRecording(self):
-        if self.recording == False:
-            return f"there are no recording in progress."
-        self.recording = False
+        if self.recording == "idle":
+            return f"There are no recording in progress."
         self.recorder.cancel()
-        self.recorder = None
+        self.timer.cancel()
+        self.recording = "idle"
         return "Done."
 
+    def playRecording(self, name):
+        if self.recording != "idle":
+            return f"Can't play recording during recording\play recording."
+        self.recording = "playing"
+        data = self.recorder.load(name)
+        msg = ""
+        for step in data:
+            func = getattr(self, step["action"])
+            msg += (func(step["speed"], step["time"])) + '\n'
+        return msg
+
+    def test(self, line):
+        return f"output:[{line}]"
 
     def recordAction(self, action, speed):
-        if self.recording == False:
+        if self.recording != "recording":
             return
         if self.action != None and self.speed != None:
             self.recorder.add({"action":self.action, "time":round(self.timer.stop()), "speed":self.speed})
@@ -75,7 +88,7 @@ class Drive:
         self.controlB.standbyOff()
         return f"Standby off, Disable motors signal"
 
-    def stop(self):
+    def stop(self, speed, time):
         self.motorFR.stopMotor()
         self.motorFL.stopMotor()
         self.motorBR.stopMotor()
