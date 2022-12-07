@@ -33,6 +33,15 @@ class Drive:
         self.recorder = None
         return "Done."
 
+    def cancelRecording(self):
+        if self.recording == False:
+            return f"there are no recording in progress."
+        self.recording = False
+        self.recorder.cancel()
+        self.recorder = None
+        return "Done."
+
+
     def recordAction(self, action, speed):
         if self.recording == False:
             return

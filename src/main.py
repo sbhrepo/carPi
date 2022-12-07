@@ -8,6 +8,8 @@ from subprocess import call
 
 app = Flask(__name__)
 
+# control  section
+
 @app.route('/status', methods=['GET'])
 def status():
     return drive.status()
@@ -26,6 +28,8 @@ def poweron():
 @app.route('/control/poweroff', methods=['GET'])
 def poweroff():
     return drive.powerOff()
+
+# drive section
 
 @app.route('/drive/stop', methods=['GET'])
 def stop():
@@ -71,6 +75,8 @@ def turnRight(speed):
 def turnLeft(speed):
     return drive.turnLeft(speed, 0)
 
+# recording section
+
 @app.route('/recording/start/<name>', methods=['GET'])
 def startRecording(name):
     return drive.startRecording(name)
@@ -79,9 +85,15 @@ def startRecording(name):
 def stopRecording():
     return drive.stopRecording()
 
+@app.route('/recording/cancel', methods=['GET'])
+def cancelRecording():
+    return drive.cancelRecording()
+
 @app.route('/recordings', methods=['GET'])
 def recordings():
     return recordings.getRecords()
+
+# Temp section
 
 @app.route('/navigate/stop', methods=['GET'])
 def NavigateStop():    
@@ -95,6 +107,7 @@ def navigateTo(name):
     return drive.startRoute(name, speed, timeToRun)
 
 
+# MAIN section
 if __name__ == '__main__':
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
     recordings = recorder.Recorder()
