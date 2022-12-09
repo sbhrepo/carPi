@@ -76,10 +76,9 @@ def turnLeft(speed):
     return drive.turnLeft(speed, 0)
 
 # recording section
-
-@app.route('/recording/play/<name>', methods=['GET'])
-def playRecording(name):
-    return drive.playRecording(name)
+@app.route('/recording/play/<name>/<repeats>', methods=['GET'])
+def playRecording(name, repeats):
+    return drive.playRecording(name, repeats)
 
 @app.route('/recording/start/<name>', methods=['GET'])
 def startRecording(name):
@@ -118,5 +117,5 @@ if __name__ == '__main__':
     drive = drive.Drive()
     nav = navigate.Navigate(drive)
     app.run(host='0.0.0.0', port=8090)
-    drive.stop()
+    drive.stop(0, 0)
     drive.powerOff()

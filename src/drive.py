@@ -1,3 +1,4 @@
+import time
 import control
 import motor
 import stopwatch
@@ -36,24 +37,30 @@ class Drive:
     def cancelRecording(self):
         if self.recording == "idle":
             return f"There are no recording in progress."
+        self.cancel = True
         self.recorder.cancel()
         self.timer.cancel()
         self.recording = "idle"
         return "Done."
 
-    def playRecording(self, name):
+    def playRecording(self, name, repeats):
         if self.recording != "idle":
             return f"Can't play recording during recording\play recording."
         self.recording = "playing"
+        self.cancel = False
         data = self.recorder.load(name)
-        msg = ""
-        for step in data:
-            func = getattr(self, step["action"])
-            msg += (func(step["speed"], step["time"])) + '\n'
-        return msg
-
-    def test(self, line):
-        return f"output:[{line}]"
+        for repeat in range (int(repeats)):
+            for step in data:
+                func = getattr(self, step["action"])
+                func(step["speed"], step["time"])
+                t_end = time.time() + step["time"]
+                while time.time() < t_end:
+                    time.sleep(1)
+                    if self.cancel == True:
+                        self.recording = "idle"
+                        return f"play recording ended [{name}]"
+        self.recording = "idle"
+        return f"play recording ended [{name}]"
 
     def recordAction(self, action, speed):
         if self.recording != "recording":
