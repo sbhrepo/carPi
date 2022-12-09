@@ -8,7 +8,6 @@ from subprocess import call
 app = Flask(__name__)
 
 # control  section
-
 @app.route('/status', methods=['GET'])
 def status():
     return drive.status()
@@ -29,7 +28,6 @@ def poweroff():
     return drive.powerOff()
 
 # drive section
-
 @app.route('/drive/stop', methods=['GET'])
 def stop():
     return drive.stop(0, 0)
@@ -74,7 +72,7 @@ def turnRight(speed):
 def turnLeft(speed):
     return drive.turnLeft(speed, 0)
 
-# recording section
+# recording and play section
 @app.route('/recording/play/<name>/<repeats>', methods=['GET'])
 def playRecording(name, repeats):
     return drive.playRecording(name, repeats)
