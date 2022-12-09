@@ -28,11 +28,8 @@ class Recorder:
         file.close()
         return data
 
-    def getRecords(self):        
-        dir_list = os.listdir("../records")
-        files_no_ext = [".".join(f.split(".")[:-1]) for f in dir_list]
-        print(files_no_ext)
-        return ' '.join(files_no_ext)
+    def getRecords(self):
+        return ' '.join([".".join(f.split(".")[:-1]) for f in os.listdir("../records")])
 
     def deleteRecord(self, name):
         os.remove("../records/"+name+".json")
