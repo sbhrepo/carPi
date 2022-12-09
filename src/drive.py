@@ -70,8 +70,10 @@ class Drive:
                     time.sleep(1)
                     if self.cancel == True:
                         self.recording = "idle"
-                        return f"play recording ended [{name}]"
+                        self.stop(0,0)
+                        return f"play recording canceled [{name}]"
         self.recording = "idle"
+        self.stop(0,0)
         return f"play recording ended [{name}]"
 
     def recordAction(self, action, speed):
