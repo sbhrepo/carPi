@@ -23,7 +23,7 @@ class Drive:
         self.action = None
         self.speed = None
         self.recordName = recordName
-        return f"OK"
+        return "OK"
 
     def stopRecording(self):
         if self.recording != "recording":
@@ -41,6 +41,18 @@ class Drive:
         self.recorder.cancel()
         self.timer.cancel()
         self.recording = "idle"
+        return "Done."
+
+    def deleteRecording(self, name):
+        if self.recording != "idle":
+            return f"Can't delete recording during recording\play recording."
+        self.recorder.deleteRecord(name)
+        return "Done."
+
+    def renameRecording(self, oldName, newName):
+        if self.recording != "idle":
+            return f"Can't rename recording during recording\play recording."
+        self.recorder.renameRecord(oldName, newName)
         return "Done."
 
     def playRecording(self, name, repeats):
@@ -76,24 +88,24 @@ class Drive:
         self.controlB.powerOn()
         msg = self.standbyOn()
         #return f"Power ON controlers\n{msg}"
-        return f"Power ON controlers"
+        return "Power ON controlers"
 
     def powerOff(self):
         msg = self.standbyOff()
         self.controlF.powerOff()
         self.controlB.powerOff()
         #return f"{msg}\nPower OFF controlers" # unless we want to add msg in all functions from all calls including for exaple poweroff x2
-        return f"Power OFF controlers"
+        return "Power OFF controlers"
 
     def standbyOn(self):
         self.controlF.standbyOn()
         self.controlB.standbyOn()
-        return f"Standby on, Enable motors signal"
+        return "Standby on, Enable motors signal"
 
     def standbyOff(self):
         self.controlF.standbyOff()
         self.controlB.standbyOff()
-        return f"Standby off, Disable motors signal"
+        return "Standby off, Disable motors signal"
 
     def stop(self, speed, time):
         self.motorFR.stopMotor()
@@ -101,7 +113,7 @@ class Drive:
         self.motorBR.stopMotor()
         self.motorBL.stopMotor()
         self.recordAction("stop", 0)
-        return f"STOPPED"
+        return "STOPPED"
 
     def front(self, speed, time):
         self.motorFR.rotateMotorCW(speed)

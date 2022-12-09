@@ -92,9 +92,18 @@ def stopRecording():
 def cancelRecording():
     return drive.cancelRecording()
 
+@app.route('/recording/delete/<name>', methods=['GET'])
+def deleteRecording(name):
+    return drive.deleteRecording(name)
+
+@app.route('/recording/rename/<oldName>/<newName>', methods=['GET'])
+def renameRecording(oldName, newName):
+    return drive.renameRecording(oldName, newName)
+
 @app.route('/recordings', methods=['GET'])
 def recordings():
     return recordings.getRecords()
+
 
 # Temp section
 
