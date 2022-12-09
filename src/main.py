@@ -1,7 +1,6 @@
 import os
 import drive
 import recorder
-import navigate
 from flask import Flask
 from flask import request
 from subprocess import call
@@ -105,27 +104,12 @@ def recordings():
     return recordings.getRecords()
 
 
-# Temp section
-
-@app.route('/navigate/stop', methods=['GET'])
-def NavigateStop():    
-    return drive.stoptRoute()
-
-@app.route('/navigate/start/<name>', methods=['GET'])
-def navigateTo(name):
-    speed = int(request.args.get("speed"))
-    timeToRun = int(request.args.get("time"))
-    print("name=",name," speed=",speed," time=",timeToRun)
-    return drive.startRoute(name, speed, timeToRun)
-
-
 # MAIN section
 if __name__ == '__main__':
     print ("carPI starting...")
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
     recordings = recorder.Recorder()
-    drive = drive.Drive()
-    nav = navigate.Navigate(drive)
+    drive = drive.Drive()    
     app.run(host='0.0.0.0', port=8090)
     drive.stop(0, 0)
     drive.powerOff()
