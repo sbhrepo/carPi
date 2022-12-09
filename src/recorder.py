@@ -23,17 +23,19 @@ class Recorder:
         self.records.clear()
 
     def load(self, name):
-        with open("../records/"+name) as file:
+        with open("../records/"+name+".json") as file:
             data = json.load(file)
         file.close()
         return data
 
-    def getRecords(self):
+    def getRecords(self):        
         dir_list = os.listdir("../records")
-        return ' '.join(dir_list)
+        files_no_ext = [".".join(f.split(".")[:-1]) for f in dir_list]
+        print(files_no_ext)
+        return ' '.join(files_no_ext)
 
     def deleteRecord(self, name):
-        os.remove("../records/"+name)
+        os.remove("../records/"+name+".json")
 
     def renameRecord(self, oldName, newName):
-        os.rename("../records/"+oldName, "../records/"+newName)
+        os.rename("../records/"+oldName+".json", "../records/"+newName+".json")

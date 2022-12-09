@@ -121,6 +121,7 @@ def navigateTo(name):
 
 # MAIN section
 if __name__ == '__main__':
+    print ("carPI starting...")
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
     recordings = recorder.Recorder()
     drive = drive.Drive()
