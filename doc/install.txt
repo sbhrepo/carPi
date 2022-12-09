@@ -3,4 +3,37 @@
 - Reboot the Raspberry Pi (sudo reboot).
 - If Python not installed, Install it.
 - If pip not installed, Install it. (sudo apt install python-pip)
-- If Flask not installed, Install it. (run pip list) ( if not sudo apt install python3-flask) or (sudo pip3 install Flask)
+- If Flask not installed, Install it. (run pip list) ( if not sudo apt install python3-flask) or (sudo pip3 install Flask
+
+
+
+Optional auto start and restart of carPi python service 
+Source:::https://www.youtube.com/watch?v=nvx9jJhSELQ&ab_channel=KevinMcAleer
+script from above video:
+sudo nano /lib/systemd/system/carpi.service  
+
+
+#put this info into this file 
+[Unit]
+car pi service
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python /home/pi/dev/carPi/src/main.py
+Restart=on-abort 
+[Install]
+WantedBy=multi-user.target
+
+# save the above file, then run::
+sudo systemctl enable carpi.service
+sudo systemctl start carpi.service
+sudo systemctl status carpi.service
+
+
+# additional commands:
+sudo systemctl stop carpi.service
+sudo systemctl restart carpi.service
+
+sudo systemctl disable carpi.service
+sudo systemctl enable carpi.service
