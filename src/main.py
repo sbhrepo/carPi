@@ -14,7 +14,7 @@ def status():
 
 @app.route('/control/shutdown', methods=['GET'])
 def shutdown():
-    drive.stop()
+    drive.stop(0.0)
     drive.powerOff()
     call("sudo shutdown --n", shell=True)
     return f"Raspberry Pi Shutdown"
