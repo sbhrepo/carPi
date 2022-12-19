@@ -39,4 +39,15 @@ https://www.amazon.com/dp/B07HNBQKNK?psc=1&ref=ppx_yo2ov_dt_b_product_details
 Resilia - Clear Vinyl, Plastic Floor Runner/Protector for Hard Floors - used something like this to protect the engine from dust and stone ricochets
 https://www.amazon.com/gp/product/B00YCZ61R0/ref=ox_sc_act_title_1?smid=AIL0BIU8LYQ5B&psc=1
 
+belt 
+https://www.amazon.com/dp/B09X3X6PTB?ref=ppx_yo2ov_dt_b_product_details&th=1
 
+
+lipo to board connector
+https://www.amazon.com/dp/B08LL8R4Q1?psc=1&smid=A2YXT9869S9BVI&ref_=chk_typ_imgToDp
+
+LIPO board to RPI 12v to 5v - connect from Lipo to USB
+https://www.amazon.com/dp/B01NALDSJ0?psc=1&ref=ppx_yo2ov_dt_b_product_details
+
+dean split (sue lipo to run both engines/conmtrollers  and RPI)
+https://www.ebay.com/itm/363141194178
