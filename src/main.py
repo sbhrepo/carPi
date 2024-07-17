@@ -64,13 +64,13 @@ def backRight(speed):
 def backLeft(speed):
     return drive.backLeft(speed, 0)
 
-@app.route('/drive/turnRight/<speed>', methods=['GET'])
-def turnRight(speed):
-    return drive.turnRight(speed, 0)
+@app.route('/drive/turnRight/<speed>/<turn_time>', methods=['GET'])
+def turnRight(speed, turn_time):
+    return drive.turnRight(speed, turn_time)
 
-@app.route('/drive/turnLeft/<speed>', methods=['GET'])
-def turnLeft(speed):
-    return drive.turnLeft(speed, 0)
+@app.route('/drive/turnLeft/<speed>/<turn_time>', methods=['GET'])
+def turnLeft(speed, turn_time):
+    return drive.turnLeft(speed, turn_time)
 
 # recording and play section
 @app.route('/recording/play/<name>/<repeats>', methods=['GET'])

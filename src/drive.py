@@ -15,6 +15,8 @@ class Drive:
         self.timer = stopwatch.StopWatch()
         self.recorder = recorder.Recorder()
         self.recording = "idle"
+        self.lastAction = "stop"
+        self.lastSpeed = 0
 
     def startRecording(self, recordName):
         if self.recording != "idle":
@@ -115,6 +117,8 @@ class Drive:
         self.motorBR.stopMotor()
         self.motorBL.stopMotor()
         self.recordAction("stop", 0)
+        self.lastAction = "stop"
+        self.lastSpeed = speed
         return "STOPPED"
 
     def front(self, speed, time):
@@ -123,6 +127,8 @@ class Drive:
         self.motorBR.rotateMotorCW(speed)
         self.motorBL.rotateMotorCCW(speed)
         self.recordAction("front", speed)
+        self.lastAction = "front"
+        self.lastSpeed = speed
         return f"DRIVING FRONT at speed %{speed}"
 
     def back(self, speed, time):
@@ -131,6 +137,8 @@ class Drive:
         self.motorBR.rotateMotorCCW(speed)
         self.motorBL.rotateMotorCW(speed)
         self.recordAction("back", speed)
+        self.lastAction = "back"
+        self.lastSpeed = speed
         return f"DRIVING BACK at speed %{speed}"
 
     def right(self, speed, time):
@@ -139,6 +147,8 @@ class Drive:
         self.motorBR.rotateMotorCW(speed)
         self.motorBL.rotateMotorCW(speed)
         self.recordAction("right", speed)
+        self.lastAction = "right"
+        self.lastSpeed = speed
         return f"DRIVING RIGHT at speed %{speed}"
 
     def left(self, speed, time):
@@ -147,6 +157,8 @@ class Drive:
         self.motorBR.rotateMotorCCW(speed)
         self.motorBL.rotateMotorCCW(speed)
         self.recordAction("left", speed)
+        self.lastAction = "left"
+        self.lastSpeed = speed
         return f"DRIVING LEFT at speed %{speed}"
 
     def frontRight(self, speed, time):
@@ -155,6 +167,8 @@ class Drive:
         self.motorBR.rotateMotorCW(speed)
         self.motorBL.stopMotor()
         self.recordAction("frontRight", speed)
+        self.lastAction = "frontRight"
+        self.lastSpeed = speed
         return f"DRIVING FRONT-RIGHT at speed %{speed}"
 
     def frontLeft(self, speed, time):
@@ -163,6 +177,8 @@ class Drive:
         self.motorBR.stopMotor()
         self.motorBL.rotateMotorCCW(speed)
         self.recordAction("frontLeft", speed)
+        self.lastAction = "frontLeft"
+        self.lastSpeed = speed
         return f"DRIVING FRONT-LEFT at speed %{speed}"
 
     def backRight(self, speed, time):
@@ -171,6 +187,8 @@ class Drive:
         self.motorBR.stopMotor()
         self.motorBL.rotateMotorCW(speed)
         self.recordAction("backRight", speed)
+        self.lastAction = "backRight"
+        self.lastSpeed = speed
         return f"DRIVING BACK-RIGHT at speed %{speed}"
 
     def backLeft(self, speed, time):
@@ -179,22 +197,32 @@ class Drive:
         self.motorBR.rotateMotorCCW(speed)
         self.motorBL.stopMotor()
         self.recordAction("backLeft", speed)
+        self.lastAction = "backLeft"
+        self.lastSpeed = speed
         return f"DRIVING BACK-LEFT at speed %{speed}"
 
-    def turnRight(self, speed, time):
+    def turnRight(self, speed, turn_time):
         self.motorFR.rotateMotorCCW(speed)
         self.motorFL.rotateMotorCCW(speed)
         self.motorBR.rotateMotorCCW(speed)
         self.motorBL.rotateMotorCCW(speed)
         self.recordAction("turnRight", speed)
+        time.sleep(turn_time)
+        # we are recording the last action and speed, and in play mode it will play twice (one from recording and one from last action)
+        func = getattr(self, self.lastAction)
+        func(self.lastSpeed, 0)
         return f"TURNING RIGHT at speed %{speed}"
 
-    def turnLeft(self, speed, time):
+    def turnLeft(self, speed, turn_time):
         self.motorFR.rotateMotorCW(speed)
         self.motorFL.rotateMotorCW(speed)
         self.motorBR.rotateMotorCW(speed)
         self.motorBL.rotateMotorCW(speed)
         self.recordAction("turnLeft", speed)
+        time.sleep(turn_time)
+        # we are recording the last action and speed, and in play mode it will play twice (one from recording and one from last action)
+        func = getattr(self, self.lastAction)
+        func(self.lastSpeed, 0)
         return f"TURNING LEFT at speed %{speed}"
 
     def status(self):
