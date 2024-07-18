@@ -207,10 +207,11 @@ class Drive:
         self.motorBR.rotateMotorCCW(speed)
         self.motorBL.rotateMotorCCW(speed)
         self.recordAction("turnRight", speed)
-        time.sleep(turn_time)
-        # we are recording the last action and speed, and in play mode it will play twice (one from recording and one from last action)
-        func = getattr(self, self.lastAction)
-        func(self.lastSpeed, 0)
+        if turn_time > 0:
+            time.sleep(turn_time)
+            # we are recording the last action and speed, and in play mode it will play twice (one from recording and one from last action)
+            func = getattr(self, self.lastAction)
+            func(self.lastSpeed, 0)
         return f"TURNING RIGHT at speed %{speed}"
 
     def turnLeft(self, speed, turn_time):
@@ -219,10 +220,11 @@ class Drive:
         self.motorBR.rotateMotorCW(speed)
         self.motorBL.rotateMotorCW(speed)
         self.recordAction("turnLeft", speed)
-        time.sleep(turn_time)
-        # we are recording the last action and speed, and in play mode it will play twice (one from recording and one from last action)
-        func = getattr(self, self.lastAction)
-        func(self.lastSpeed, 0)
+        if turn_time > 0:
+            time.sleep(turn_time)
+            # we are recording the last action and speed, and in play mode it will play twice (one from recording and one from last action)
+            func = getattr(self, self.lastAction)
+            func(self.lastSpeed, 0)
         return f"TURNING LEFT at speed %{speed}"
 
     def status(self):
