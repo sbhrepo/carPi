@@ -1,2 +1,4 @@
 __pycache__/
 records/
+voices/*.onnx
+tools/piper/

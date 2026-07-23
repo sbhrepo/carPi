@@ -1,6 +1,7 @@
 import os
 import drive
 import recorder
+import speech
 from flask import Flask
 from flask import request
 from subprocess import call
@@ -101,13 +102,35 @@ def renameRecording(oldName, newName):
 def recordings():
     return recordings.getRecords()
 
+# speech / TTS section (USB speaker)
+@app.route('/speak/stop', methods=['GET'])
+def speakStop():
+    return tts.stop()
+
+@app.route('/speak/status', methods=['GET'])
+def speakStatus():
+    return tts.status()
+
+@app.route('/speak/<voice>', methods=['GET'])
+def speakQuery(voice):
+    # Android-friendly: /speak/female?text=Hello%20world
+    text = request.args.get('text', '')
+    return tts.speak(voice, text)
+
+@app.route('/speak/<voice>/<path:text>', methods=['GET'])
+def speak(voice, text):
+    # Path style: /speak/male/Hello%20from%20carPi
+    return tts.speak(voice, text)
+
 
 # MAIN section
 if __name__ == '__main__':
     print ("carPI starting...")
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
     recordings = recorder.Recorder()
-    drive = drive.Drive()    
+    drive = drive.Drive()
+    tts = speech.Speech()
     app.run(host='0.0.0.0', port=8090)
     drive.stop(0, 0)
     drive.powerOff()
+    tts.stop()

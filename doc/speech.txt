@@ -1,0 +1,102 @@
+USB speaker text-to-speech (carPi)
+=================================
+
+Overview
+--------
+carPi can speak text through a USB audio speaker using Piper neural TTS.
+Voices:
+  - male   -> en_US-ryan-medium (Ryan)
+  - female -> en_US-amy-medium (Amy)
+
+Delivery is tuned to sound threatened / scared (faster, higher pitch, shaky).
+This is intentional for the robot/Android demo use case.
+
+Hardware notes
+--------------
+- Use a true USB audio speaker (UAC). Example seen on this Pi:
+    Jieli Technology UACDemoV1.0  -> ALSA card "UACDemoV10"
+- Prefer plugging the speaker directly into the Raspberry Pi USB port.
+  Some hubs fail to enumerate this class of device reliably.
+- Confirm with:  lsusb   and   aplay -l
+  You should see a USB Audio card (not only Headphones / HDMI).
+
+Packages
+--------
+  sudo apt update
+  sudo apt install -y alsa-utils sox
+
+Piper binary (aarch64 / Pi 4)
+-----------------------------
+Large binaries are NOT stored in git. Download once:
+
+  mkdir -p /home/pi/dev/carPi/tools
+  cd /tmp
+  wget -O piper_linux_aarch64.tar.gz \
+    https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_linux_aarch64.tar.gz
+  tar -xzf piper_linux_aarch64.tar.gz
+  mkdir -p /home/pi/dev/carPi/tools/piper
+  cp -a piper/* /home/pi/dev/carPi/tools/piper/
+  chmod +x /home/pi/dev/carPi/tools/piper/piper
+
+Voice models
+------------
+  mkdir -p /home/pi/dev/carPi/voices
+  cd /home/pi/dev/carPi/voices
+
+  wget -O en_US-amy-medium.onnx \
+    https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/amy/medium/en_US-amy-medium.onnx
+  wget -O en_US-amy-medium.onnx.json \
+    https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/amy/medium/en_US-amy-medium.onnx.json
+
+  wget -O en_US-ryan-medium.onnx \
+    https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/ryan/medium/en_US-ryan-medium.onnx
+  wget -O en_US-ryan-medium.onnx.json \
+    https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/ryan/medium/en_US-ryan-medium.onnx.json
+
+Expected layout:
+
+  carPi/
+    tools/piper/piper          (+ shared libs from the tarball)
+    voices/en_US-amy-medium.onnx[.json]
+    voices/en_US-ryan-medium.onnx[.json]
+    src/speech.py
+    src/main.py
+
+Restart the service after install:
+
+  sudo systemctl restart carpi.service
+
+HTTP API (port 8090)
+--------------------
+Same style as the drive API (GET). URL-encode spaces as %20.
+
+  GET /speak/<voice>/<text>
+      voice = male | female
+      Example: /speak/male/Please%20dont%20hurt%20me
+
+  GET /speak/<voice>?text=<text>
+      Android-friendly query form
+      Example: /speak/female?text=Oh%20god...%20please%20no!
+
+  GET /speak/stop
+      Stop current playback
+
+  GET /speak/status
+      Example: device=plughw:3,0 engine=piper speaking=no
+
+Tips for a more terrified line from the Android app
+---------------------------------------------------
+Short phrases + ellipses work best, for example:
+  Please... please don't hurt me! I'll give you anything... just don't shoot!
+
+Volume / device
+---------------
+speech.py auto-selects the Jieli / USB Audio ALSA device and sets PCM ~95%.
+Manual beep test:
+  amixer -c <card> set PCM 90% unmute
+  aplay -D plughw:<card>,0 /path/to/file.wav
+
+Code
+----
+  src/speech.py  - Piper synthesis + scared sox post-process + aplay
+  src/main.py    - /speak routes

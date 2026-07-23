@@ -3,7 +3,15 @@
 - Reboot the Raspberry Pi (sudo reboot).
 - If Python not installed, Install it.
 - If pip not installed, Install it. (sudo apt install python-pip)
-- If Flask not installed, Install it. (run pip list) ( if not sudo apt install python3-flask) or (sudo pip3 install Flask
+- If Flask not installed, Install it. (run pip list) ( if not sudo apt install python3-flask) or (sudo pip3 install Flask)
+- For USB speaker text-to-speech: see doc/speech.txt
+  Quick deps: sudo apt install -y alsa-utils sox
+  Then download Piper binary + Amy/Ryan voice models (large files, not in git).
+  API (port 8090):
+    GET /speak/male/Oh%20no%20please%20stop
+    GET /speak/female?text=Please%20dont%20hurt%20me
+    GET /speak/stop
+    GET /speak/status
 
 
 
